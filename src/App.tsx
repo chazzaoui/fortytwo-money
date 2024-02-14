@@ -1,36 +1,21 @@
 import React, { useState } from 'react';
 import {
-  Button,
-  Center,
   Flex,
-  Input,
   Table,
   TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Text,
   Th,
   Thead,
   Tr,
 } from '@chakra-ui/react';
 import { useTokenData } from './hooks/useTokensFetch';
+import WalletAddressInput from './components/walletAddressInput';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
-  const [isValid, setIsValid] = useState(true);
   const [tokens, refresh] = useTokenData(true);
-
-  const validateAddress = () => {
-    const regex = /^0x[a-fA-F0-9]{40}$/;
-    setIsValid(regex.test(walletAddress));
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setWalletAddress(e.currentTarget.value);
-  };
 
   return (
     <Flex
@@ -41,32 +26,10 @@ function App() {
       flexDirection="column"
       alignItems={'center'}
     >
-      <Center
-        mb={12}
-        flexDirection={'column'}
-        width={['100%', '80%', '50%']}
-      >
-        <Input
-          placeholder="Enter wallet address"
-          value={walletAddress}
-          onChange={handleInputChange}
-          errorBorderColor="crimson"
-          backgroundColor={'white'}
-        />
-        {!isValid && (
-          <Text color="crimson">
-            Please enter a valid wallet address.
-          </Text>
-        )}
-        <Button
-          backgroundColor={'#6cc879ff'}
-          onClick={validateAddress}
-          mt={2}
-          border={'2px solid black'}
-        >
-          Get me my assets
-        </Button>
-      </Center>
+      <WalletAddressInput
+        walletAddress={walletAddress}
+        setWalletAddress={setWalletAddress}
+      />
       <TableContainer rounded={'md'} border={'2px solid black'}>
         <Table variant="striped">
           <TableCaption placement="top">Your assets</TableCaption>
