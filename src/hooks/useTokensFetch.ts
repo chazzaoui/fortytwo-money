@@ -32,22 +32,32 @@ const fetchTokenData = (): Promise<TokenData[]> => {
 
 export const useTokenData = (
   autoRefresh = false
-): [TokenData[], () => void] => {
+): [TokenData[], () => void, boolean, string | null] => {
   const [tokens, setTokens] = useState<TokenData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const refresh = useCallback(() => {
-    fetchTokenData().then(setTokens);
+  const fetch = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await fetchTokenData();
+      setTokens(data);
+    } catch (e) {
+      setError('Failed to fetch token data');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
-    refresh();
     if (autoRefresh) {
       const interval = setInterval(() => {
-        refresh();
+        fetch();
       }, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoRefresh, refresh]);
+  }, [autoRefresh, fetch]);
 
-  return [tokens, refresh];
+  return [tokens, fetch, loading, error];
 };
