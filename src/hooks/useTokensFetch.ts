@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+
 import { getRandomPrice } from '../utils/getRandomPrice';
 
 interface TokenData {
@@ -38,7 +39,7 @@ const fetchTokenData = (): Promise<TokenData[]> => {
 // Chose to do a custom hook here, would normally work with react query
 // Especially working with live data its great to invalidate stuff and refresh in the background
 
-export const useTokenData = (
+const useTokenData = (
   autoRefresh = false
 ): [TokenData[] | undefined, () => void, boolean, string | null] => {
   const [tokens, setTokens] = useState<TokenData[] | undefined>(
@@ -72,3 +73,5 @@ export const useTokenData = (
 
   return [tokens, fetch, loading, error];
 };
+
+export default useTokenData;
