@@ -1,25 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import {
+  Button,
+  Center,
+  Flex,
+  Input,
+  Table,
+  TableCaption,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 
 function App() {
+  const [walletAddress, setWalletAddress] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
+  const validateAddress = () => {
+    const regex = /^0x[a-fA-F0-9]{40}$/;
+    setIsValid(regex.test(walletAddress));
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setWalletAddress(e.currentTarget.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Flex
+      width={'100vw'}
+      height={'100vh'}
+      bg={'#d9d9d9ff'}
+      padding={4}
+      flexDirection="column"
+      alignItems={'center'}
+    >
+      <Center
+        mb={12}
+        flexDirection={'column'}
+        width={['100%', '80%', '50%']}
+      >
+        <Input
+          placeholder="Enter wallet address"
+          value={walletAddress}
+          onChange={handleInputChange}
+          errorBorderColor="crimson"
+          backgroundColor={'white'}
+        />
+        {!isValid && (
+          <Text color="crimson">
+            Please enter a valid wallet address.
+          </Text>
+        )}
+        <Button
+          backgroundColor={'#6cc879ff'}
+          onClick={validateAddress}
+          mt={2}
+          border={'2px solid black'}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          Get me my assets
+        </Button>
+      </Center>
+      <TableContainer rounded={'md'} border={'2px solid black'}>
+        <Table variant="striped">
+          <TableCaption placement="top">Your assets</TableCaption>
+          <Thead>
+            <Tr>
+              <Th>Token</Th>
+              <Th>Current price</Th>
+              <Th>Balance</Th>
+            </Tr>
+          </Thead>
+        </Table>
+      </TableContainer>
+    </Flex>
   );
 }
 
