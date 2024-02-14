@@ -1,6 +1,7 @@
 // WalletAddressInput.tsx
 import React, { useState } from 'react';
 import { Button, Input, Text, VStack } from '@chakra-ui/react';
+import { colors } from '../styles/colors';
 
 interface WalletAddressInputProps {
   walletAddress: string;
@@ -52,7 +53,7 @@ const WalletAddressInput: React.FC<WalletAddressInputProps> = ({
         </Text>
       )}
       <Button
-        backgroundColor={'#6cc879ff'}
+        backgroundColor={colors.button}
         onClick={validateAddress}
         mt={2}
         border={'2px solid black'}

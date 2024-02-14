@@ -4,6 +4,7 @@ import { Flex } from '@chakra-ui/react';
 import useTokenData from './hooks/useTokensFetch';
 import WalletAddressInput from './components/walletAddressInput';
 import AssetsTable from './components/assetTable';
+import { colors } from './styles/colors';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
@@ -14,7 +15,7 @@ function App() {
     <Flex
       width={'100vw'}
       height={'100vh'}
-      bg={'#d9d9d9ff'}
+      backgroundColor={colors.background}
       padding={4}
       flexDirection="column"
       alignItems={'center'}
