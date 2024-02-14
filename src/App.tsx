@@ -14,10 +14,12 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { useTokenData } from './hooks/useTokensFetch';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const [isValid, setIsValid] = useState(true);
+  const [tokens, refresh] = useTokenData(true);
 
   const validateAddress = () => {
     const regex = /^0x[a-fA-F0-9]{40}$/;
@@ -75,6 +77,15 @@ function App() {
               <Th>Balance</Th>
             </Tr>
           </Thead>
+          <Tbody>
+            {tokens.map((token, index) => (
+              <Tr key={index}>
+                <Td>{token.name}</Td>
+                <Td>${token.currentPrice}</Td>
+                <Td>{token.balance}</Td>
+              </Tr>
+            ))}
+          </Tbody>
         </Table>
       </TableContainer>
     </Flex>
