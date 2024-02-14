@@ -8,6 +8,7 @@ interface TokenData {
   balance: number;
 }
 
+// mocks an api fetch, with a 2 seconding "fetching" delay
 const fetchTokenData = (): Promise<TokenData[]> => {
   return new Promise((resolve) => {
     const data: TokenData[] = [
