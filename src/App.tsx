@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import { useTokenData } from './hooks/useTokensFetch';
 import WalletAddressInput from './components/walletAddressInput';
 import AssetsTable from './components/assetTable';
