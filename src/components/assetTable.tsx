@@ -19,7 +19,7 @@ interface TokenData {
 }
 
 interface AssetsTableProps {
-  tokens: TokenData[];
+  tokens: TokenData[] | undefined;
   loading: boolean;
   error: string | null;
 }
@@ -29,7 +29,7 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
   loading,
   error,
 }) => {
-  if (!loading && tokens.length === 0) {
+  if (!loading && tokens?.length === 0) {
     return (
       <Center my={4}>
         <Text>No assets found</Text>
@@ -47,9 +47,9 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
 
   return (
     <TableContainer
-      width={'100%'}
-      rounded={'md'}
-      border={'2px solid black'}
+      width="100%"
+      rounded="md"
+      border="2px solid black"
     >
       <Table variant="striped">
         <TableCaption placement="top">Your assets</TableCaption>
@@ -57,11 +57,11 @@ const AssetsTable: React.FC<AssetsTableProps> = ({
           <Tr>
             <Th>Token</Th>
             <Th>Current price</Th>
-            <Th>Balance</Th>
+            <Th>Current Balance</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {tokens.map((token, index) => (
+          {tokens?.map((token, index) => (
             <Tr key={index}>
               <Td>{token.name}</Td>
               <Td>${token.currentPrice}</Td>

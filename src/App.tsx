@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { Button, Flex } from '@chakra-ui/react';
 import { useTokenData } from './hooks/useTokensFetch';
 import WalletAddressInput from './components/walletAddressInput';
 import AssetsTable from './components/assetTable';
 
 function App() {
   const [walletAddress, setWalletAddress] = useState('');
+  // pass boolean true to the hook to activate auto refresh
   const [tokens, fetch, loading, error] = useTokenData();
 
   return (

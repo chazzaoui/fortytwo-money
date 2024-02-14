@@ -16,10 +16,14 @@ const WalletAddressInput: React.FC<WalletAddressInputProps> = ({
   loading,
 }) => {
   const [isValid, setIsValid] = useState(true);
-
+  const [hasFetched, setHasFetched] = useState(false);
   const validateAddress = () => {
     const regex = /^0x[a-fA-F0-9]{40}$/;
-    if (regex.test(walletAddress)) fetchTokens();
+    if (regex.test(walletAddress)) {
+      fetchTokens();
+      setIsValid(true);
+      setHasFetched(true);
+    }
     if (!regex.test(walletAddress)) setIsValid(false);
   };
 
@@ -27,6 +31,10 @@ const WalletAddressInput: React.FC<WalletAddressInputProps> = ({
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setWalletAddress(e.target.value);
+    // whenever you want to refetch with new adress update the copy
+    if (!e.target.value) {
+      setHasFetched(false);
+    }
   };
 
   return (
@@ -49,8 +57,9 @@ const WalletAddressInput: React.FC<WalletAddressInputProps> = ({
         mt={2}
         border={'2px solid black'}
         isLoading={loading}
+        width={['100%', '100%', '50%']}
       >
-        Get me my assets
+        {hasFetched ? 'Refresh' : 'Get me my assets'}
       </Button>
     </VStack>
   );

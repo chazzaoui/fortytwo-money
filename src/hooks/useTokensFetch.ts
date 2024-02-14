@@ -25,16 +25,26 @@ const fetchTokenData = (): Promise<TokenData[]> => {
         currentPrice: getRandomPrice(),
         balance: 300,
       },
+      {
+        name: 'Forty two coin',
+        currentPrice: getRandomPrice(),
+        balance: 69420,
+      },
     ];
     setTimeout(() => resolve(data), 2000);
   });
 };
 
+// Chose to do a custom hook here, would normally work with react query
+// Especially working with live data its great to invalidate stuff and refresh in the background
+
 export const useTokenData = (
   autoRefresh = false
-): [TokenData[], () => void, boolean, string | null] => {
-  const [tokens, setTokens] = useState<TokenData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+): [TokenData[] | undefined, () => void, boolean, string | null] => {
+  const [tokens, setTokens] = useState<TokenData[] | undefined>(
+    undefined
+  );
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetch = useCallback(async () => {
@@ -44,6 +54,7 @@ export const useTokenData = (
       const data = await fetchTokenData();
       setTokens(data);
     } catch (e) {
+      console.error(e);
       setError('Failed to fetch token data');
     } finally {
       setLoading(false);
